@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'dart:developer';
+import 'dart:io';
+
+import 'package:qr_code_scanner_plus/qr_code_scanner_plus.dart';
 
 class ScannerScreen extends StatefulWidget {
   const ScannerScreen({super.key});
@@ -88,7 +92,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
               child: TextField(
                 controller: _barcodeController,
                 decoration: InputDecoration(
-                  hintText: 'Scan or enter barcode here...',
+                  hintText: 'Enter barcode here...',
                   border: InputBorder.none,
                   contentPadding: const EdgeInsets.all(15),
                   suffixIcon: IconButton(
@@ -98,6 +102,12 @@ class _ScannerScreenState extends State<ScannerScreen> {
                     ),
                     onPressed: () {
                       // Future: Integrate QR code scanner package
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(builder: (context) => const QRViewExample()),
+                          );
+
+                      
                     },
                   ),
                 ),
@@ -194,7 +204,7 @@ class _ScannerScreenState extends State<ScannerScreen> {
                               width: 50,
                               height: 50,
                               decoration: BoxDecoration(
-                                color: Colors.amberAccent.withOpacity(0.2),
+                                color: Colors.amberAccent.withValues(alpha: 0.2),
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: const Icon(
@@ -255,6 +265,81 @@ class _ScannerScreenState extends State<ScannerScreen> {
   @override
   void dispose() {
     _barcodeController.dispose();
+    super.dispose();
+  }
+}
+
+
+
+class QRViewExample extends StatefulWidget {
+  const QRViewExample({super.key});
+
+  @override
+  State<QRViewExample> createState() => _QRViewExampleState();
+}
+
+class _QRViewExampleState extends State<QRViewExample> {
+  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+  Barcode? result;
+  QRViewController? controller;
+
+  @override
+  void reassemble() {
+    super.reassemble();
+
+    // Fix hot reload camera issue
+    if (Platform.isAndroid) {
+      controller?.pauseCamera();
+    } else if (Platform.isIOS) {
+      controller?.resumeCamera();
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text("QR Scanner"),
+        centerTitle: true,
+      ),
+      body: Column(
+        children: [
+          Expanded(
+            flex: 5,
+            child: QRView(
+              key: qrKey,
+              onQRViewCreated: _onQRViewCreated,
+            ),
+          ),
+          Expanded(
+            flex: 1,
+            child: Center(
+              child: result != null
+                  ? Text(
+                      'Type:xx',
+                      textAlign: TextAlign.center,
+                    )
+                  : const Text('Scan a QR code'),
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _onQRViewCreated(QRViewController controller) {
+    this.controller = controller;
+
+    controller.scannedDataStream.listen((scanData) {
+      setState(() {
+        result = scanData;
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    controller?.dispose();
     super.dispose();
   }
 }

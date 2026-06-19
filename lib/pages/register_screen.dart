@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rfid/pages/login_screen.dart';
 import 'package:rfid/pages/home_screen.dart';
+import 'package:rfid/pages/ProcurementApp.dart';
 
 class RegisterScreen extends StatefulWidget {
   const RegisterScreen({super.key});
@@ -10,6 +11,8 @@ class RegisterScreen extends StatefulWidget {
 }
 
 class _RegisterScreenState extends State<RegisterScreen> {
+  String _selectedRole = 'Storekeeper';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -65,7 +68,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                   child: Column(
                     children: [
                       const Text(
-                        "Sign Up",
+                        "Register",
                         style: TextStyle(
                           color: Colors.black,
                           fontSize: 34,
@@ -104,6 +107,44 @@ class _RegisterScreenState extends State<RegisterScreen> {
                         isPassword: true,
                       ),
 
+                      const SizedBox(height: 20),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            'Register as',
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          RadioListTile<String>(
+                            title: const Text('Storekeeper'),
+                            value: 'Storekeeper',
+                            groupValue: _selectedRole,
+                            activeColor: Colors.amberAccent,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRole = value ?? 'Storekeeper';
+                              });
+                            },
+                          ),
+                          RadioListTile<String>(
+                            title: const Text('Procurement'),
+                            value: 'Procurement',
+                            groupValue: _selectedRole,
+                            activeColor: Colors.amberAccent,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRole = value ?? 'Storekeeper';
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+
                       const SizedBox(height: 25),
 
                       SizedBox(
@@ -119,13 +160,13 @@ class _RegisterScreenState extends State<RegisterScreen> {
                           onPressed: () {
                             Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
-                                builder: (context) => const HomeScreen(),
+                                builder: (context) => const LoginScreen(),
                               ),
                               (route) => false,
                             );
                           },
                           child: const Text(
-                            "Sign Up",
+                            "Confirm Registration",
                             style: TextStyle(
                               fontSize: 18,
                               color: Colors.black,

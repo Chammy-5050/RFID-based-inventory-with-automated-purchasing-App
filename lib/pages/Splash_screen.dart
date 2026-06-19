@@ -31,7 +31,7 @@ class _SplashScreenState extends State<SplashScreen> {
                     borderRadius: BorderRadius.circular(25),
                     boxShadow: [
                       BoxShadow(
-                        color: Colors.black.withOpacity(0.1),
+                        color: Colors.black.withValues(alpha: 0.1),
                         blurRadius: 8,
                         offset: const Offset(0, 4),
                       ),
@@ -50,7 +50,7 @@ class _SplashScreenState extends State<SplashScreen> {
 
                 // TITLE
                 const Text(
-                  "RFID Inventory",
+                  "RFID Inventory Management with",
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     fontSize: 32,
@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
                   "Automated Purchasing App",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 18,
+                    fontSize: 30,
                     fontWeight: FontWeight.w500,
                     color: Colors.amberAccent,
                     letterSpacing: 0.5,
@@ -79,7 +79,7 @@ class _SplashScreenState extends State<SplashScreen> {
                 const Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: Text(
-                    "Easy-to-use RFID inventory management system that helps companies increase efficiency and automate purchasing operations.",
+                    "Easy-to-use RFID inventory management app that helps companies increase efficiency and automate purchasing operations.",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       fontSize: 14,
@@ -104,7 +104,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       elevation: 4,
                     ),
                     onPressed: () {
-                      Navigator.of(context).push(
+                      Navigator.of(context).pushReplacement(
                         MaterialPageRoute<void>(
                           builder: (context) => const LoginScreen(),
                         ),
@@ -156,7 +156,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       );
                     },
                     child: const Text(
-                      "Sign Up",
+                      "Register",
                       style: TextStyle(
                         fontSize: 18,
                         fontWeight: FontWeight.bold,

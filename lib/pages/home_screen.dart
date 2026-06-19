@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:rfid/pages/Scanner_screen.dart';
-import 'package:rfid/pages/Reveive_inventory.dart';
-import 'package:rfid/pages/Transfer_inventory.dart';
 import 'package:rfid/pages/notification_screen.dart';
 import 'package:rfid/pages/login_screen.dart';
 
@@ -23,8 +21,6 @@ class _HomeScreenState extends State<HomeScreen> {
     _pages = [
       const DashboardPage(),
       const ScannerScreen(),
-      const ReceiveInventoryScreen(),
-      const TransferInventoryScreen(),
       const NotificationScreen(),
     ];
   }
@@ -38,6 +34,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+    
       appBar: AppBar(
         title: const Text(
           'RFID Inventory App',
@@ -77,8 +74,6 @@ class _HomeScreenState extends State<HomeScreen> {
             icon: Icon(Icons.qr_code_scanner),
             label: 'Scanner',
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.input), label: 'Receive'),
-          BottomNavigationBarItem(icon: Icon(Icons.send), label: 'Transfer'),
           BottomNavigationBarItem(
             icon: Icon(Icons.notifications),
             label: 'Notifications',
@@ -163,56 +158,56 @@ class DashboardPage extends StatelessWidget {
             const SizedBox(height: 40),
 
             // Quick Actions
-            const Text(
-              'Quick Actions',
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
-              ),
-            ),
-            const SizedBox(height: 20),
+            // const Text(
+            //   'Quick Actions',
+            //   style: TextStyle(
+            //     fontSize: 20,
+            //     fontWeight: FontWeight.bold,
+            //     color: Colors.black87,
+            //   ),
+            // ),
+            // const SizedBox(height: 20),
 
-            _buildActionButton(
-              title: 'Scan Item',
-              description: 'Scan RFID tags to track items',
-              icon: Icons.qr_code_scanner,
-              color: Colors.blue,
-              onPressed: () {
-                // Navigate to Scanner
-              },
-            ),
-            const SizedBox(height: 15),
-            _buildActionButton(
-              title: 'Receive Inventory',
-              description: 'Add new items to inventory',
-              icon: Icons.input,
-              color: Colors.green,
-              onPressed: () {
-                // Navigate to Receive
-              },
-            ),
-            const SizedBox(height: 15),
-            _buildActionButton(
-              title: 'Transfer Items',
-              description: 'Move items between locations',
-              icon: Icons.send,
-              color: Colors.purple,
-              onPressed: () {
-                // Navigate to Transfer
-              },
-            ),
-            const SizedBox(height: 15),
-            _buildActionButton(
-              title: 'View Notifications',
-              description: 'Check system alerts and updates',
-              icon: Icons.notifications,
-              color: Colors.orange,
-              onPressed: () {
-                // Navigate to Notifications
-              },
-            ),
-            const SizedBox(height: 40),
+            // _buildActionButton(
+            //   title: 'Scan Item',
+            //   description: 'Scan RFID tags to track items',
+            //   icon: Icons.qr_code_scanner,
+            //   color: Colors.blue,
+            //   onPressed: () {
+            //     // Navigate to Scanner
+            //   },
+            // ),
+            // const SizedBox(height: 15),
+            // _buildActionButton(
+            //   title: 'Receive Inventory',
+            //   description: 'Add new items to inventory',
+            //   icon: Icons.input,
+            //   color: Colors.green,
+            //   onPressed: () {
+            //     // Navigate to Receive
+            //   },
+            // ),
+            // const SizedBox(height: 15),
+            // _buildActionButton(
+            //   title: 'Transfer Items',
+            //   description: 'Move items between locations',
+            //   icon: Icons.send,
+            //   color: Colors.purple,
+            //   onPressed: () {
+            //     // Navigate to Transfer
+            //   },
+            // ),
+            // const SizedBox(height: 15),
+            // _buildActionButton(
+            //   title: 'View Notifications',
+            //   description: 'Check system alerts and updates',
+            //   icon: Icons.notifications,
+            //   color: Colors.orange,
+            //   onPressed: () {
+            //     // Navigate to Notifications
+            //   },
+            // ),
+            // const SizedBox(height: 40),
 
             // Recent Activity
             const Text(
@@ -261,9 +256,9 @@ class DashboardPage extends StatelessWidget {
       child: Container(
         padding: const EdgeInsets.all(20),
         decoration: BoxDecoration(
-          color: color.withOpacity(0.1),
+          color: color.withValues(alpha: 0.1),
           borderRadius: BorderRadius.circular(15),
-          border: Border.all(color: color.withOpacity(0.3)),
+          border: Border.all(color: color.withValues(alpha: 0.3)),
         ),
         child: Column(
           children: [
@@ -302,7 +297,7 @@ class DashboardPage extends StatelessWidget {
         borderRadius: BorderRadius.circular(15),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.1),
+            color: Colors.black.withValues(alpha: 0.1),
             blurRadius: 8,
             offset: const Offset(0, 4),
           ),
@@ -320,7 +315,7 @@ class DashboardPage extends StatelessWidget {
                 Container(
                   padding: const EdgeInsets.all(12),
                   decoration: BoxDecoration(
-                    color: color.withOpacity(0.1),
+                    color: color.withValues(alpha: 0.1),
                     borderRadius: BorderRadius.circular(12),
                   ),
                   child: Icon(icon, color: color, size: 28),

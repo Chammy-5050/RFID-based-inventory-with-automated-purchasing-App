@@ -103,7 +103,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
           // Header
           Container(
             padding: const EdgeInsets.all(20),
-            color: Colors.amberAccent.withOpacity(0.1),
+            color: Colors.amberAccent.withValues(alpha: 0.1),
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
@@ -117,7 +117,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                     ),
                     const SizedBox(height: 5),
                     Text(
-                      '${unreadCount} unread',
+                      '$unreadCount unread',
                       style: const TextStyle(color: Colors.grey),
                     ),
                   ],
@@ -167,7 +167,7 @@ class _NotificationScreenState extends State<NotificationScreen> {
                         decoration: BoxDecoration(
                           color: notification['isRead']
                               ? Colors.grey[100]
-                              : Colors.amberAccent.withOpacity(0.1),
+                              : Colors.amberAccent.withValues(alpha: 0.1),
                           borderRadius: BorderRadius.circular(12),
                           border: Border.all(
                             color: notification['color'].withOpacity(0.3),

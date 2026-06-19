@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:rfid/pages/register_screen.dart';
 import 'package:rfid/pages/home_screen.dart';
+import 'package:rfid/pages/ProcurementApp.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -10,6 +11,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
+  String _selectedRole = 'Storekeeper';
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -93,6 +96,45 @@ class _LoginScreenState extends State<LoginScreen> {
 
                       const SizedBox(height: 20),
 
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          const Text(
+                            "Sign in as",
+                            style: TextStyle(
+                              color: Colors.black,
+                              fontSize: 18,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                          const SizedBox(height: 10),
+                          RadioListTile<String>(
+                            title: const Text('Storekeeper'),
+                            value: 'Storekeeper',
+                            groupValue: _selectedRole,
+                            activeColor: Colors.amberAccent,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRole = value ?? 'Storekeeper';
+                              });
+                            },
+                          ),
+                          RadioListTile<String>(
+                            title: const Text('Procurement'),
+                            value: 'Procurement',
+                            groupValue: _selectedRole,
+                            activeColor: Colors.amberAccent,
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedRole = value ?? 'Storekeeper';
+                              });
+                            },
+                          ),
+                        ],
+                      ),
+
+                      const SizedBox(height: 5),
+
                       Row(
                         children: [
                           Checkbox(
@@ -123,9 +165,13 @@ class _LoginScreenState extends State<LoginScreen> {
                             ),
                           ),
                           onPressed: () {
+                            final destination = _selectedRole == 'Procurement'
+                                ? const ProcurementDashboard()
+                                : const HomeScreen();
+
                             Navigator.of(context).pushAndRemoveUntil(
                               MaterialPageRoute(
-                                builder: (context) => const HomeScreen(),
+                                builder: (context) => destination,
                               ),
                               (route) => false,
                             );
@@ -165,7 +211,7 @@ class _LoginScreenState extends State<LoginScreen> {
                                 );
                               },
                               child: const Text(
-                                "Sign Up",
+                                "Register",
                                 style: TextStyle(
                                   color: Colors.amberAccent,
                                   fontSize: 16,

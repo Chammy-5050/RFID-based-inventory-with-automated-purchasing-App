@@ -1,0 +1,101 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client-js"
+  // output   = "../src/generated/prisma"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+
+model user {
+  userId Int @id @default(autoincrement())
+  username String 
+  password String
+  email String @unique 
+  usertype String
+  purchaseOrders PurchaseOrder[]
+}
+
+model Supplier {
+  supplierId Int @id @default(autoincrement())
+  suppliername String @unique
+  contactPerson String?
+  email String?
+  phone String?
+  address String?
+  paymentTerms String?
+  status String @default("active")
+  items Item[]
+  purchaseOrders PurchaseOrder[]
+  createdAt DateTime @default(now())
+}
+
+model Item {
+  itemId Int @id @default(autoincrement())
+  itemname String?
+  sku String?
+  quantity Int
+  minStock Int @default(30)
+  supplierId Int?
+  rfidCode String?
+  purchaseOrders PurchaseOrder[]
+  scanRecords ScanRecord[]
+  rfidTag RFIDTag?
+  supplier Supplier? @relation(fields: [supplierId], references: [supplierId])
+  @@unique([itemId])
+}
+
+
+
+model PurchaseOrder {
+  poId Int @id @default(autoincrement())
+  quantity Int
+  totalAmount Float?
+  supplierId Int
+  confirmed Boolean @default(false)
+  status String @default("pending")
+  createdAt DateTime @default(now())
+  createdBy Int?
+  itemId Int
+  item Item @relation(fields: [itemId], references: [itemId])
+  supplier Supplier @relation(fields: [supplierId], references: [supplierId])
+  procurementOfficer user? @relation(fields: [createdBy], references: [userId])
+
+}
+
+model RFIDTag {
+  itemId Int @unique
+  itemname String
+  quantity Int
+  tagCode String?
+  item Item @relation(fields: [itemId], references: [itemId])
+
+}
+
+model Notification {
+  notid Int @id @default(autoincrement())
+  title String?
+  message String
+  type String
+  sentat DateTime @default(now())
+  isRead Boolean @default(false)
+}
+
+model ScanRecord {
+  scanId Int @id @default(autoincrement())
+  barcode String
+  scannedAt DateTime @default(now())
+  quantity Int @default(1)
+  itemId Int?
+  item Item? @relation(fields: [itemId], references: [itemId])
+}
+
+
+
+
